@@ -1,0 +1,5 @@
+es:
+  hello: "Hola Mundo"
+  home: 'Inicio'
+  sign_as: "Logeado como"
+  logout: "Cerrar sesion"
