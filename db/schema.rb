@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120050808) do
+ActiveRecord::Schema.define(version: 20171120215926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "folders", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.bigint "parent_folder_id"
+    t.index ["created_by_id"], name: "index_folders_on_created_by_id"
+    t.index ["parent_folder_id"], name: "index_folders_on_parent_folder_id"
+    t.index ["updated_by_id"], name: "index_folders_on_updated_by_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -35,4 +47,7 @@ ActiveRecord::Schema.define(version: 20171120050808) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
+  add_foreign_key "folders", "folders", column: "parent_folder_id"
+  add_foreign_key "folders", "users", column: "created_by_id"
+  add_foreign_key "folders", "users", column: "updated_by_id"
 end

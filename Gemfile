@@ -67,6 +67,9 @@ group :development do
   gem 'rspec_junit_formatter'
   gem 'selenium-webdriver'
   gem 'webmock'
+
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
