@@ -80,6 +80,7 @@ test:
 #
 production:
   <<: *default
+  host: hochfarber.com
   database: DocArk_production
   username: DocArk
   password: <%= ENV['DOCARK_DATABASE_PASSWORD'] %>
