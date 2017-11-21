@@ -10,10 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171120050808) do
+ActiveRecord::Schema.define(version: 20171121080047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
+
+  create_table "documents", force: :cascade do |t|
+    t.string "name"
+    t.integer "size"
+    t.uuid "aws_identifier", default: -> { "uuid_generate_v4()" }
+    t.bigint "parent_folder_id"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_documents_on_created_by_id"
+    t.index ["parent_folder_id"], name: "index_documents_on_parent_folder_id"
+    t.index ["updated_by_id"], name: "index_documents_on_updated_by_id"
+  end
+
+  create_table "folders", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.bigint "parent_folder_id"
+    t.index ["created_by_id"], name: "index_folders_on_created_by_id"
+    t.index ["parent_folder_id"], name: "index_folders_on_parent_folder_id"
+    t.index ["updated_by_id"], name: "index_folders_on_updated_by_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -35,4 +62,22 @@ ActiveRecord::Schema.define(version: 20171120050808) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
+  create_table "versions", force: :cascade do |t|
+    t.integer "version"
+    t.bigint "document_id"
+    t.bigint "user_id"
+    t.boolean "current"
+    t.datetime "created_at", null: false
+    t.index ["document_id"], name: "index_versions_on_document_id"
+    t.index ["user_id"], name: "index_versions_on_user_id"
+  end
+
+  add_foreign_key "documents", "folders", column: "parent_folder_id"
+  add_foreign_key "documents", "users", column: "created_by_id"
+  add_foreign_key "documents", "users", column: "updated_by_id"
+  add_foreign_key "folders", "folders", column: "parent_folder_id"
+  add_foreign_key "folders", "users", column: "created_by_id"
+  add_foreign_key "folders", "users", column: "updated_by_id"
+  add_foreign_key "versions", "documents"
+  add_foreign_key "versions", "users"
 end

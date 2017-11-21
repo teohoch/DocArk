@@ -6,6 +6,11 @@ class User < ApplicationRecord
          :trackable,
          #:validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
+  has_many :folders_created, :class_name => 'Folder', :foreign_key => 'created_by_id'
+  has_many :folders_updated, :class_name => 'Folder', :foreign_key => 'updated_by_id'
+
+  has_many :files_created, :class_name => 'Files', :foreign_key => 'created_by_id'
+  has_many :files_updated, :class_name => 'Files', :foreign_key => 'updated_by_id'
 
   def self.from_omniauth(access_token)
     data = access_token.info

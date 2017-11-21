@@ -20,6 +20,9 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: hochfarber.com
+  username: DocArk
+  password: mysecretpassword
 
 development:
   <<: *default
@@ -80,7 +83,6 @@ test:
 #
 production:
   <<: *default
-  host: hochfarber.com
   database: DocArk_production
   username: DocArk
   password: <%= ENV['DOCARK_DATABASE_PASSWORD'] %>

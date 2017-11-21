@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :files, controller: 'documents', as: 'documents'
+  resources :folders
   get 'home/index'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
