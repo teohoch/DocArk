@@ -5,3 +5,4 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+FactoryBot.create(:folder,:has_children, family_tree: [{name: 'popo', type: 1},{type: 1, contents: [{name: 'lala', type: 0}]}])

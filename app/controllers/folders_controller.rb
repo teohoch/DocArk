@@ -10,6 +10,7 @@ class FoldersController < ApplicationController
   # GET /folders/1
   # GET /folders/1.json
   def show
+    @user = User.find_by id: @folder.created_by
   end
 
   # GET /folders/new

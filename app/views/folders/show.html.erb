@@ -1,9 +1,19 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @folder.name %>
-</p>
+<table>
+  <tr>
+    <th><%= @folder.name %></th>
+  </tr>
+  <tr>
+    <th><%= @folder.updated_at %></th>
+  </tr>
+  <tr>
+    <th><%= @folder.created_at %></th>
+  </tr>
+  <tr>
+    <th><%= @user.email %></th>
+  </tr>
+</table>
 
 <%= link_to 'Edit', edit_folder_path(@folder) %> |
 <%= link_to 'Back', folders_path %>
