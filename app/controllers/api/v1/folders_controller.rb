@@ -29,7 +29,7 @@ module Api
       end
 
       def create
-        @folder = Folder.new(folder_create.merge({:created_by_id => 8,:updated_by_id => 8}))
+        @folder = Folder.new(folder_create.merge({:created_by_id => 1,:updated_by_id => 1}))
         if @folder.save
           @folder.decorate
         else

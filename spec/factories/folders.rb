@@ -32,9 +32,9 @@ FactoryBot.define do
             end
           else
             if branch.has_key? :name
-              create(:file, name: branch[:name], parent_folder: folder, created_by: folder.created_by)
+              create(:document, name: branch[:name], parent_folder: folder, created_by: folder.created_by)
             else
-              create(:file, parent_folder: folder, created_by: folder.created_by)
+              create(:document, parent_folder: folder, created_by: folder.created_by)
             end
           end
         end
