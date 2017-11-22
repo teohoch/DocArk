@@ -54,7 +54,7 @@ module Api
         end
 
         if @folder.destroy
-          render :nothing => true, :status => 20
+          head :no_content
         else
           a = error_creator(@folder.errors)
           render partial: 'api/v1/error', locals: {:@error => a}, status: a[:code]

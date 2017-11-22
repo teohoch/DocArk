@@ -11,7 +11,6 @@ class Folder < ApplicationRecord
 
   before_destroy :has_contents?
 
-
   scope :in_root, -> () {where(parent_folder: nil)}
   scope :child_of, -> (parent_id=nil) {where(parent_folder_id: parent_id)}
   scope :is_owner, -> (owner) {where(created_by: owner)}
@@ -20,6 +19,8 @@ class Folder < ApplicationRecord
   def full_path
     parent_folder.nil? ? "/#{name}" : "#{parent_folder.full_path}/#{name}"
   end
+
+  private
 
   def parent_folder_ownership
     unless parent_folder.nil? or parent_folder.created_by == created_by

@@ -9,9 +9,16 @@ class Document < ApplicationRecord
   validates :updated_by, presence: true
   validate :parent_folder_ownership
 
+  scope :in_root, -> () {where(parent_folder: nil)}
+  scope :child_of, -> (parent_id=nil) {where(parent_folder_id: parent_id)}
+  scope :is_owner, -> (owner) {where(created_by: owner)}
+  scope :name_ilike, -> (name) { where('name ilike any ( array[?] )', name.map {|val| "%#{val}%"} ) }
+
   after_initialize do
-    @version = version.blank? ? nil : latest_version.version
+    @version = versions.blank? ? nil : latest_version.version
   end
+
+  before_destroy :destroy_versions
 
   def access_url
     generate_access_url
@@ -23,10 +30,9 @@ class Document < ApplicationRecord
     current_version.expiration_date
   end
 
-
   def version
     if @version.nil?
-      @version = version.blank? ? nil : latest_version.version
+      @version = @version.blank? ? nil : latest_version.version
     end
     @version
   end
@@ -58,12 +64,16 @@ class Document < ApplicationRecord
 
   private
 
+  def destroy_versions
+    versions.destroy_all
+  end
+
   def current_version
-    versions.find_by_version(@version)
+    versions.where(version: @version).first
   end
 
   def latest_version
-    versions.find_by_current(true)
+    versions.where(current: true).order(version: :desc).first
   end
 
   def generate_access_url
@@ -79,6 +89,7 @@ class Document < ApplicationRecord
   end
 
   def url_generator
+    # TODO Implement function that generates url
     {access_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Lockheed_SR-71_Blackbird.jpg/1200px-Lockheed_SR-71_Blackbird.jpg',expiration_date: Faker::Time.forward(1)}
   end
 
