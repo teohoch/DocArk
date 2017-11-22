@@ -144,10 +144,57 @@ RSpec.describe 'API Folder Resourse', type: :request do
     end
   end
 
+  describe 'GET/folder{id}' do
+    context 'return an existing folder' do
+      before(:each) do
+        @test = FactoryBot.create(:folder)
+        get "/api/v1/folders/#{test.id}"
+      end
+
+      it 'should returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'should be a Json Array' do
+        expect{JSON.parse(response.body)}.not_to raise_error
+        expect(response.content_type).to eq("application/json")
+      end
+
+      it 'should contain 1' do
+        #expect(response.count).to contain_exacly(1)
+        expect(JSON.parse(response.body).count).to eq(1)
+      end
+      it 'should contain the searched folder' do
+        response_id = JSON.parse(response.body)[:id]
+        expect(response_id).to eq(@test.id)
+        end
+      end
+    context 'return an non-existing folder' do
+      before(:each) do
+        #FactoryBot.create(:folder, :has_children, family_tree: [{type:1},{type:1}])
+        get '/api/v1/folders/909'
+      end
+
+      it 'should returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
+
+      #it 'returns a not found message' do
+       # expect(response.body).to match(/Couldn't find The Folder/)
+      #end
+
+      it 'should be error 404' do
+        response_error = JSON.parse(response.body)
+        response_error['code'].to eq(404)
+      end
+
+    end
+  end
   
-
-
 end
+
+
+
 
 
 
