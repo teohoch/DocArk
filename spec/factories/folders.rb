@@ -31,7 +31,11 @@ FactoryBot.define do
               create(:folder, :has_children, family_tree: branch[:contents], parent_folder: folder, created_by: folder.created_by)
             end
           else
-            nil
+            if branch.has_key? :name
+              create(:file, name: branch[:name], parent_folder: folder, created_by: folder.created_by)
+            else
+              create(:file, parent_folder: folder, created_by: folder.created_by)
+            end
           end
         end
       end
