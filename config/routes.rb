@@ -9,7 +9,14 @@ Rails.application.routes.draw do
     delete 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
-  root to: 'folders#index'
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+      resources :files, controller: 'documents', as: 'documents'
+      resources :folders
+    end
+  end
+
+  root to: 'home#index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

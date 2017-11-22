@@ -45,10 +45,21 @@ gem 'omniauth-google-oauth2'
 
 gem 'octicons_helper'
 
+gem 'draper'
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+
+  gem 'factory_bot_rails'
+  gem 'faker'
+
+  gem 'capybara'
+  gem 'rspec-rails'
+  gem 'rspec_junit_formatter'
+  gem 'selenium-webdriver'
+  gem 'webmock'
 end
 
 group :development do
@@ -61,15 +72,6 @@ group :development do
 
   gem "better_errors"
   gem "binding_of_caller"
-
-  gem 'capybara'
-  gem 'rspec-rails'
-  gem 'rspec_junit_formatter'
-  gem 'selenium-webdriver'
-  gem 'webmock'
-
-  gem 'factory_bot_rails'
-  gem 'faker'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

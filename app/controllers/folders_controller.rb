@@ -4,7 +4,7 @@ class FoldersController < ApplicationController
   # GET /folders
   # GET /folders.json
   def index
-    @folders = Folder.all
+    @folders = FolderDecorator.decorate_collection(Folder.in_root)
   end
 
   # GET /folders/1
