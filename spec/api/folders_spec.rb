@@ -1,62 +1,63 @@
-require 'rspec'
+require 'rails_helper'
 
 RSpec.describe 'API Folder Resourse', type: :request do
 
   describe 'GET /folder' do
     context 'return all' do
-      @folder_a = FactoryBot.create(:folder, has_children, family_tree: [{type:1},{type:1}])
-
-      before { get '/api/v1/folders' }
+      before(:each) do
+        FactoryBot.create(:folder, :has_children, name: 'cala', family_tree: [{name: 'lala',type:1},{type:1}])
+        get '/api/v1/folders'
+      end
 
       it 'should returns status code 200' do
         expect(response).to have_http_status(200)
       end
 
       it 'should be a Json Array' do
-        expect(json.parse(response.body)).not_to raise_error
-        expect(response.contect_type).to eq("application/json")
+        expect{JSON.parse(response.body)}.not_to raise_error
+        expect(response.content_type).to eq("application/json")
       end
 
       it 'should contain 3' do
         #expect(response.count).to contain_exacly(3)
-        expect(response.count).to eq(3)
+        expect(JSON.parse(response.body).count).to eq(3)
       end
       it 'should contain all accesable folder' do
         accesable = Folder.all
-        response_ids = response.map{ |a| a['id']}
+        response_ids = JSON.parse(response.body).map{ |a| a['id']}
         accesable.each do |folder|
-          response_ids.should include folder.id
+          expect(response_ids).to include(folder.id)
         end
       end
     end
 
     context 'return name of a folder' do
-      @folder_a = FactoryBot.create(:folder, has_children, family_tree: [{type:1},{type:1}])
-
-      before { get '/api/v1/folders' }
+      before(:each) do
+        FactoryBot.create(:folder, :has_children, name: 'cala', family_tree: [{name: 'lala',type:1},{type:1}])
+        get '/api/v1/folders?name=la'
+      end
 
       it 'should returns status code 200' do
         expect(response).to have_http_status(200)
       end
 
       it 'should be a Json Array' do
-        expect(json.parse(response.body)).not_to raise_error
-        expect(response.contect_type).to eq("application/json")
+        expect{JSON.parse(response.body)}.not_to raise_error
+        expect(response.content_type).to eq("application/json")
       end
 
       it 'should contain 2' do
         #expect(response.count).to contain_exacly(3)
-        expect(response.count).to eq(2)
+        expect(JSON.parse(response.body).count).to eq(2)
       end
       it 'should contain all accesable folder with name like ' do
-        accesable = Folder.all
-        response_ids = response.map{ |a| a['id']}
+        accesable = Folder.name_ilike(['la'])
+        response_ids = JSON.parse(response.body).map{ |a| a['id']}
         accesable.each do |folder|
-          response_ids.should include folder.id
+          expect(response_ids).to include(folder.id)
         end
       end
     end
-
   end
 end
 

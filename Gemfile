@@ -58,6 +58,7 @@ group :development, :test do
   gem 'capybara'
   gem 'rspec-rails'
   gem 'rspec_junit_formatter'
+  gem "database_cleaner"
   gem 'selenium-webdriver'
   gem 'webmock'
 end

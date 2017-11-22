@@ -7,7 +7,6 @@ class Document < ApplicationRecord
   validates_uniqueness_of :name, :scope => [:parent_folder_id, :created_by_id]
   validates :created_by, presence: true
   validates :updated_by, presence: true
-  validates :parent_folder, presence: true
   validate :parent_folder_ownership
 
 

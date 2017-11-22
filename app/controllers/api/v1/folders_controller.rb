@@ -74,7 +74,9 @@ module Api
       # Never trust parameters from the scary internet, only allow the white list through.
       def folder_params
         temp = params.permit(:name, :id_parent_folder,:limit,:offset,:format)
-        temp[:parent_folder_id] = temp.delete(:id_parent_folder)
+        if temp.has_key? :id_parent_folder
+          temp[:parent_folder_id] = temp.delete(:id_parent_folder)
+        end
         temp
       end
       def folder_create
