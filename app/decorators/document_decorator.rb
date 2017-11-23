@@ -3,6 +3,14 @@ class DocumentDecorator < ApplicationDecorator
   delegate_all
   decorates_finders
 
+  def parent_folder_id
+    super.nil? ? -1 : super
+  end
+
+  def parent_folder
+    object.parent_folder
+  end
+
   def to_simple_object(api=false)
     {id: id, type: 1, name: name, url: url(api)}
   end

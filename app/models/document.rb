@@ -15,24 +15,21 @@ class Document < ApplicationRecord
   scope :name_ilike, -> (name) { where('name ilike any ( array[?] )', name.map {|val| "%#{val}%"} ) }
 
   after_initialize do
-    @version = versions.blank? ? nil : latest_version.version
+    @version = versions.count.zero? ? nil : latest_version.version
   end
 
   before_destroy :destroy_versions
-
   def access_url
-    generate_access_url
-    current_version.access_url
+    current_version.upfile.url
   end
 
   def expiration_date
-    generate_access_url
     current_version.expiration_date
   end
 
   def version
     if @version.nil?
-      @version = @version.blank? ? nil : latest_version.version
+      @version = versions.count.zero? ? nil : latest_version.version
     end
     @version
   end
@@ -57,9 +54,13 @@ class Document < ApplicationRecord
   end
 
   def parent_folder_ownership
-    unless parent_folder.created_by == created_by
+    unless parent_folder.nil? or parent_folder.created_by == created_by
       errors[:parent_folder_ownership] << 'You don\'t have access to the parent folder.'
     end
+  end
+
+  def current_version
+    versions.where(version: version).first
   end
 
   private
@@ -68,29 +69,9 @@ class Document < ApplicationRecord
     versions.destroy_all
   end
 
-  def current_version
-    versions.where(version: @version).first
-  end
+
 
   def latest_version
     versions.where(current: true).order(version: :desc).first
   end
-
-  def generate_access_url
-    if @access_url.nil?
-      url_asigner
-    elsif DateTime.now > @expiration_date
-      url_asigner
-    end
-  end
-
-  def url_asigner
-    current_version.update(url_generator)
-  end
-
-  def url_generator
-    # TODO Implement function that generates url
-    {access_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Lockheed_SR-71_Blackbird.jpg/1200px-Lockheed_SR-71_Blackbird.jpg',expiration_date: Faker::Time.forward(1)}
-  end
-
 end

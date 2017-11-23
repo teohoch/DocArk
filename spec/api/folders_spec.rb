@@ -6,7 +6,7 @@ RSpec.describe 'API Folder Resourse', type: :request do
     context 'return all' do
       before(:each) do
         FactoryBot.create(:folder, :has_children, name: 'cala', family_tree: [{name: 'lala',type:1},{type:1}])
-        get '/api/v1/folders'
+        get "/api/v1/folders"
       end
 
       it 'should returns status code 200' do

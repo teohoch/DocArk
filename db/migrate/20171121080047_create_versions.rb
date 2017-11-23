@@ -7,7 +7,7 @@ class CreateVersions < ActiveRecord::Migration[5.1]
       t.references :user, foreign_key: true
       t.boolean :current
 
-      t.string :access_url
+      t.string :upfile
       t.datetime :expiration_date
 
       t.datetime :created_at, null: false

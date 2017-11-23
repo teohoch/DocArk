@@ -1,8 +1,7 @@
 require 'pp'
 module Api
   module V1
-    class FoldersController < ApplicationController
-      skip_before_action :verify_authenticity_token
+    class FoldersController < APIController
       before_action :set_folder, only: [:show, :update, :destroy]
       respond_to :json
 
@@ -29,12 +28,15 @@ module Api
       end
 
       def create
-        @folder = Folder.new(folder_create.merge({:created_by_id => 1,:updated_by_id => 1}))
-        if @folder.save
-          @folder.decorate
+        if not folder_create.has_key?(:name)
+          error_renderer({code: 400, message: 'Name parameter is missing'})
         else
-          a = error_creator(@folder.errors)
-          render partial: 'api/v1/error', locals: {:@error => a}, status: a[:code]
+          @folder = Folder.new(folder_create.merge({:created_by_id => 1,:updated_by_id => 1}))
+          if @folder.save
+            @folder = @folder.decorate
+          else
+            error_renderer(error_creator(@folder.errors))
+          end
         end
       end
 
@@ -42,8 +44,7 @@ module Api
         if @folder.update(folder_create)
           @folder = @folder.decorate
         else
-          a = error_creator(@folder.errors)
-          render partial: 'api/v1/error', locals: {:@error => a}, status: a[:code]
+          error_renderer(error_creator(@folder.errors))
         end
       end
 
@@ -56,8 +57,7 @@ module Api
         if @folder.destroy
           head :no_content
         else
-          a = error_creator(@folder.errors)
-          render partial: 'api/v1/error', locals: {:@error => a}, status: a[:code]
+          error_renderer(error_creator(@folder.errors))
         end
       end
 
@@ -67,7 +67,7 @@ module Api
         if Folder.exists?(params[:id])
           @folder = Folder.find(params[:id])
         else
-          render partial: 'api/v1/error', locals: {:@error => {code: 404, message: 'Folder Not Found'}}, status: 404
+          error_renderer({code: 404, message: 'Folder Not Found'})
         end
       end
 
@@ -79,29 +79,18 @@ module Api
         end
         temp
       end
+
       def folder_create
         temp = params.permit(:name, :id_parent_folder)
         temp[:parent_folder_id] = temp.delete(:id_parent_folder)
         temp
       end
+
       def force_delete_param
         temp = params.permit(:force)
         (temp.has_key? :force and temp[:force] == 1)
       end
-      def error_creator(error_info)
-        case error_info.keys[0]
-          when :parent_folder
-            {code: 400, message: 'The Parent Folder must be valid.'}
-          when :name
-            {code: 409, message: 'Conflict - Duplicated Name in the folder.'}
-          when :parent_folder_ownership
-            {code: 401, message: 'You don\'t have access to the parent folder.'}
-          when :contents
-            {code: 403, message: 'The Folder you\'re trying to delete has contents!.'}
-          else
-            {code: 500, message: 'Unknown Error'}
-        end
-      end
+
     end
   end
 end
