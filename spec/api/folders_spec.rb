@@ -190,35 +190,61 @@ RSpec.describe 'API Folder Resourse', type: :request do
 
     end
   end
-  
+
+  describe 'POST/folder{id}' do
+    context 'create a folder with a name' do
+      before(:each) do
+        post "/api/v1/folders/", params: {name: 'lala'}
+      end
+
+      it 'should returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'should be a Json Array' do
+        expect{JSON.parse(response.body)}.not_to raise_error
+        expect(response.content_type).to eq("application/json")
+      end
+
+      it 'should be in the DB' do
+        @carpeta = Folder.where(name: lala).first
+        expect(JSON.parse(response.body)['id']).to eq(@carpeta.id)
+      end
+
+    end
+
+    context 'create a folder with a name and an ID father' do
+      before(:each) do
+        @parent_folder = FactoryBot.create(:folder)
+
+        post "/api/v1/folders/", params: {name: 'lala', id_parent_folder: @parent_folder.id}
+      end
+
+      it 'should returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'should be a Json Object' do
+        expect{JSON.parse(response.body)}.not_to raise_error
+        expect(response.content_type).to eq("application/json")
+      end
+
+      it 'should be in the DB' do
+        @carpeta= Folder.where(name: lala)
+        JSON.parse(response.body)['id'].to eq(@carpeta)
+      end
+
+      it 'should contain the searched folder' do
+        response_id = JSON.parse(response.body)[:id]
+        expect(response_id).to eq(@parent_folder.id)
+      end
+
+      it 'should be in the DB' do
+        @c = Folder.where(name: 'lala').first
+        expect(c.parent_folder_id).to eq(@parent_folder.id)
+      end
+
+    end
+
+  end
 end
-
-
-
-
-
-
-
-
-      #Que devuelva todas las carpetas que tenga acceso el usuario
-      #Creo dos carpetas para el usuario, y otras dos que no son del usuario
-      #Luego hacer una llamada a la API: googlear api request rspec hago el request a get folders
-      #Y eso me va a dar una respuestaÑ response, y va a tener un código, un body y un header
-      #Lo primero que se revisa que el código sea 200, y la respuesta en code debe ser igual a 200
-      #El body debe ser un arreglo json, ya que debe ser un arreglo de carpeta
-
-      #El revisar que no esté la carpeta que no debería estar. Ese es otro test
-
-      #-1 código para el root, para ver las carpetas del root.
-      #/folders?Iparent=n° -^ context "with parent"
-      #?name="wea" -^ context "with name"
-      #?offset = 5
-      #?limit = 5
-      #?offset = 5 & limit =5
-
-
-
-
-
-  #describe 'GET /folder/{id}' do
-    #end
