@@ -29,7 +29,7 @@
             <%= image_tag current_user.image, html_options = {style: 'max-height:40px; border-radius: 25px;'} %>
           </span>
       <% else %>
-          <%= button_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, html_options={class: 'btn btn-primary '} %>
+          <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, html_options={class: 'btn btn-primary '} %>
       <% end %>
 
 

@@ -3,6 +3,7 @@ module Api
   module V1
     class DocumentsController < APIController
       before_action :set_document, only: [:show, :update, :destroy]
+      before_action :doorkeeper_authorize!
       respond_to :json
 
       def index

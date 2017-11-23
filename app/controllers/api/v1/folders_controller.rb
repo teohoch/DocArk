@@ -3,6 +3,7 @@ module Api
   module V1
     class FoldersController < APIController
       before_action :set_folder, only: [:show, :update, :destroy]
+      before_action :doorkeeper_authorize!
       respond_to :json
 
       def index

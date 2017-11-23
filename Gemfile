@@ -48,7 +48,9 @@ gem 'octicons_helper'
 gem 'draper'
 
 gem 'carrierwave'
-gem "fog"
+gem 'fog'
+
+gem 'doorkeeper'
 
 
 group :development, :test do
