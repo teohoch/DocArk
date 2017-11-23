@@ -5,6 +5,7 @@ class FoldersController < ApplicationController
   # GET /folders.json
   def index
     @folders = FolderDecorator.decorate_collection(Folder.in_root)
+    @foldersOwn = Folder.where created_by_id: current_user.id
   end
 
   # GET /folders/1
@@ -25,7 +26,7 @@ class FoldersController < ApplicationController
   # POST /folders
   # POST /folders.json
   def create
-    @folder = Folder.new(folder_params)
+    @folder = Folder.new(name: folder_params[:name], created_by: current_user, updated_by: current_user)
 
     respond_to do |format|
       if @folder.save
