@@ -2,12 +2,24 @@ require 'pp'
 module Api
   module V1
     class FoldersController < APIController
+
+      before_action only: [:index, :show] do
+        doorkeeper_authorize! :read
+      end
+
+      before_action only: [:create, :update] do
+        doorkeeper_authorize! :write
+      end
+
+      before_action only: [:destroy] do
+        doorkeeper_authorize! :delete
+      end
       before_action :set_folder, only: [:show, :update, :destroy]
-      before_action :doorkeeper_authorize!
+
       respond_to :json
 
       def index
-        query_folders = Folder.all
+        query_folders = Folder.is_owner(current_user.id)
         if folder_params.has_key? :name
           query_folders = query_folders.name_ilike(folder_params[:name].split(','))
         end
@@ -67,6 +79,9 @@ module Api
       def set_folder
         if Folder.exists?(params[:id])
           @folder = Folder.find(params[:id])
+          unless current_user.id == @folder.created_by
+            error_renderer({code: 401, message: 'Unauthorized'})
+          end
         else
           error_renderer({code: 404, message: 'Folder Not Found'})
         end

@@ -2,12 +2,23 @@ require 'pp'
 module Api
   module V1
     class DocumentsController < APIController
+
+      before_action only: [:index, :show] do
+        doorkeeper_authorize! :read
+      end
+
+      before_action only: [:create, :update] do
+        doorkeeper_authorize! :write
+      end
+
+      before_action only: [:destroy] do
+        doorkeeper_authorize! :delete
+      end
       before_action :set_document, only: [:show, :update, :destroy]
-      before_action :doorkeeper_authorize!
       respond_to :json
 
       def index
-        query_documents = Document.all
+        query_documents = Document.is_owner(current_user.id)
         if document_params.has_key? :name
           query_documents = query_documents.name_ilike(document_params[:name].split(','))
         end
@@ -112,6 +123,9 @@ module Api
       def set_document
         if Document.exists?(params[:id])
           @document = Document.find(params[:id])
+          unless current_user.id == @document.created_by
+            error_renderer({code: 401, message: 'Unauthorized'})
+          end
         else
           render partial: 'api/v1/error', locals: {:@error => {code: 404, message: 'Document Not Found'}}, status: 404
         end

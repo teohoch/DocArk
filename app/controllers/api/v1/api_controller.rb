@@ -6,6 +6,10 @@ class Api::V1::APIController < ActionController::Base
     $root_url = root_url
   end
 
+  def doorkeeper_unauthorized_render_options(error: nil)
+    { json: { code: 401, message: "Not authorized" } }
+  end
+
   def new_session_path(scope)
     new_user_session_path
   end
@@ -27,5 +31,12 @@ class Api::V1::APIController < ActionController::Base
 
   def error_renderer(error_hash)
     render partial: 'api/v1/error', locals: {:@error => error_hash}, status: error_hash[:code]
+  end
+
+  private
+  def current_user
+    if doorkeeper_token
+      @current_user ||= User.find(doorkeeper_token.resource_owner_id)
+    end
   end
 end
