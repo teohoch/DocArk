@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   use_doorkeeper
-  resources :files, controller: 'documents', as: 'documents'
-  resources :folders
+  authenticate :user do
+    resources :files, controller: 'documents', as: 'documents'
+    resources :folders
+  end
+
   get 'home/index'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
