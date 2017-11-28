@@ -79,6 +79,15 @@ class DocumentsController < ApplicationController
   # PATCH/PUT /documents/1
   # PATCH/PUT /documents/1.json
   def update
+    if request.method_symbol == :put
+      update_put
+    elsif request.method_symbol == :patch
+      update_patch
+    else
+      render partial: 'api/v1/error', locals: {:@error => {code: 501, message: 'Not Implemented'}}, status: 501
+    end
+
+
     respond_to do |format|
       if @document.update(document_params)
         format.html { redirect_to @document, notice: 'Document was successfully updated.' }
@@ -89,6 +98,34 @@ class DocumentsController < ApplicationController
       end
     end
   end
+
+  def update_put
+    old_version = @document.current_version
+    @new_version = Version.new(
+        document: @document,
+        version: @document.version+1,
+        size: (document_create[:upfile].size/(2.0**20)).ceil,
+        current: true,
+        upfile: document_create[:upfile],
+        user: @document.created_by
+    )
+    if @new_version.save
+      old_version.current = false
+      old_version.save
+      redirect_to @document, notice: 'New Version of Document Uploaded.'
+    else
+      render :edit
+    end
+  end
+
+  def update_patch
+    if @document.update(:parent_folder => document_patch[:parent_folder])
+      redirect_to @document, notice: 'Document Updated.'
+    else
+      error_renderer(error_creator(@document.errors))
+    end
+  end
+
 
   # DELETE /documents/1
   # DELETE /documents/1.json
