@@ -23,11 +23,11 @@ class Document < ApplicationRecord
 
   before_destroy :destroy_versions
   def access_url
-    current_version.upfile.url
+    current_version.access_url
   end
 
   def expiration_date
-    current_version.expiration_date
+    Time.now + 1.hour
   end
 
   def version

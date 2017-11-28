@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   use_doorkeeper
   authenticate :user do
-    resources :files, controller: 'documents', as: 'documents'
+    resources :files, controller: 'documents', as: 'documents' do
+      get 'upgrade', on: :member
+    end
     resources :folders
   end
 

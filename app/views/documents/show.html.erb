@@ -7,12 +7,15 @@
 
 <p>
   <strong>Size:</strong>
-  <%= @document.size %> Bytes
+  <%= number_to_human_size @document.size %>
 </p>
 
 <p>
   <strong>Version:</strong>
   <%= @document.version %>
+</p>
+<p>
+  <%= link_to 'Download', @document.access_url %>
 </p>
 
 <%= link_to 'Edit', edit_document_path(@document) %> |

@@ -123,7 +123,7 @@ module Api
       def set_document
         if Document.exists?(params[:id])
           @document = Document.find(params[:id])
-          unless current_user.id == @document.created_by
+          unless current_user.id == @document.created_by_id
             error_renderer({code: 401, message: 'Unauthorized'})
           end
         else

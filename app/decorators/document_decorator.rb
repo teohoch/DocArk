@@ -19,14 +19,6 @@ class DocumentDecorator < ApplicationDecorator
     end
   end
 
-  def access_url
-    url(true)
-  end
-
-  def expiration_date
-    Time.now + 1.day
-  end
-
   def url(api=false)
     if api
       URI.join($root_url,api_v1_document_path(self)).to_s
