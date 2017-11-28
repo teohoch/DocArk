@@ -7,6 +7,7 @@ class Folder < ApplicationRecord
   validates_uniqueness_of :name, :scope => [:parent_folder_id, :created_by_id]
   validates :created_by, presence: true
   validates :updated_by, presence: true
+  validates :name, presence: true, allow_blank: false
   validate :parent_folder_ownership
 
   before_destroy :has_contents?

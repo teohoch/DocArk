@@ -7,12 +7,15 @@ class Document < ApplicationRecord
   validates_uniqueness_of :name, :scope => [:parent_folder_id, :created_by_id]
   validates :created_by, presence: true
   validates :updated_by, presence: true
+  validates :name, presence: true, allow_blank: false
   validate :parent_folder_ownership
 
   scope :in_root, -> () {where(parent_folder: nil)}
   scope :child_of, -> (parent_id=nil) {where(parent_folder_id: parent_id)}
   scope :is_owner, -> (owner) {where(created_by: owner)}
   scope :name_ilike, -> (name) { where('name ilike any ( array[?] )', name.map {|val| "%#{val}%"} ) }
+
+  attr_accessor :upfile
 
   after_initialize do
     @version = versions.count.zero? ? nil : latest_version.version

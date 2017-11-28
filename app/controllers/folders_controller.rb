@@ -1,22 +1,27 @@
 class FoldersController < ApplicationController
   before_action :set_folder, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /folders
   # GET /folders.json
   def index
-    @folders = FolderDecorator.decorate_collection(Folder.in_root)
-    @foldersOwn = Folder.where created_by_id: current_user.id
+    folders = FolderDecorator.decorate_collection(Folder.is_owner(current_user.id).in_root)
+    files = DocumentDecorator.decorate_collection(Document.is_owner(current_user.id).in_root)
+    @contents = folders.map(&:to_simple_object) + files.map(&:to_simple_object)
+    @current_folder = Folder.new(name: 'Root')
   end
 
   # GET /folders/1
   # GET /folders/1.json
   def show
     @user = User.find_by id: @folder.created_by
+    @contents = @folder.decorate.contents
   end
 
   # GET /folders/new
   def new
-    @folder = Folder.new
+    @folder = Folder.new(:parent_folder_id => (folder_new_params) )
+    @fixed = params.has_key? :parent_folder_id
   end
 
   # GET /folders/1/edit
@@ -26,7 +31,7 @@ class FoldersController < ApplicationController
   # POST /folders
   # POST /folders.json
   def create
-    @folder = Folder.new(name: folder_params[:name], created_by: current_user, updated_by: current_user)
+    @folder = Folder.new(name: folder_params[:name], parent_folder_id: folder_create_params, created_by: current_user, updated_by: current_user)
 
     respond_to do |format|
       if @folder.save
@@ -71,6 +76,22 @@ class FoldersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def folder_params
-      params.require(:folder).permit(:name)
+      params.require(:folder).permit(:name, :parent_folder_id)
+    end
+
+    def folder_new_params
+      if params.has_key?(:parent_folder_id) and params[:parent_folder_id] != '-1'
+        (params[:parent_folder_id])
+      else
+        nil
+      end
+    end
+
+    def folder_create_params
+      if folder_params.has_key?(:parent_folder_id) and folder_params[:parent_folder_id] != '-1'
+        (folder_params[:parent_folder_id])
+      else
+        nil
+      end
     end
 end

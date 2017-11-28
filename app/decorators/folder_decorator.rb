@@ -15,8 +15,14 @@ class FolderDecorator < ApplicationDecorator
 
 
   def to_simple_object(api=false)
-    {id: id, type: 1, name: name, url: url(api)}
+    if api
+      {id: id, type: 1, name: name, url: url(api)}
+    else
+      {id: id, type: 1, name: name, url: url(api), created_at: object.created_at, updated_at: object.updated_at}
+    end
   end
+
+
 
   def url(api=false)
     if api

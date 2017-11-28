@@ -1,4 +1,8 @@
-<p id="notice"><%= notice %></p>
+
+<h2>Directorio: <%= @folder.full_path %></h2>
+<br>
+
+<%= render 'contents', :contents=>@contents, :current_folder=>@folder %>
 
 <table>
   <tr>

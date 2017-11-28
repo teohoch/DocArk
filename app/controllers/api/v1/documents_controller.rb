@@ -49,8 +49,8 @@ module Api
           @document = Document.new(
               name: name,
               parent_folder_id: document_create[:parent_folder],
-              created_by_id: 1,
-              updated_by_id: 1
+              created_by_id: current_user.id,
+              updated_by_id: current_user.id
           )
           if @document.save
             @version = Version.new(
