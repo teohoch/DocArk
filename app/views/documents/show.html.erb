@@ -1,15 +1,15 @@
 <p>
-  <strong>Name:</strong>
+  <strong> <%= t('name') %> </strong>
   <%= @document.name %>
 </p>
 
 <p>
-  <strong>Size:</strong>
+  <strong> <%= t('size') %> </strong>
   <%= number_to_human_size @document.size %>
 </p>
 
 <p>
-  <strong>Version:</strong>
+  <strong> <%= t('version') %> </strong>
   <%= @document.version %>
 </p>
 <p>

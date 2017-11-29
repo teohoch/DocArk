@@ -3,3 +3,26 @@ es:
   home: 'Inicio'
   sign_as: "Logeado como"
   logout: "Cerrar sesion"
+
+  created: "Creado"
+  updated: "Actualizado"
+  editing: "Editar"
+  path: "Directorio"
+
+  name: "Nombre"
+  size: "Tamaño"
+  version: "Versión"
+
+  new: "Nueva"
+  newo: "Nuevo"
+
+  folder:
+    folder: "Carpeta"
+    folders: "Carpetas"
+
+  document:
+    document: "Documento"
+    documents: "Documentos"
+
+
+
