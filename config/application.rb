@@ -30,6 +30,6 @@ module DocArk
 
     config.autoload_paths += %W["#{config.root}/lib/validators/"]
 
-    config.i18n.default_locale = :en
+    config.i18n.default_locale = :es
   end
 end

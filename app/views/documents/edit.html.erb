@@ -1,6 +1,6 @@
-<h1>Editing Document</h1>
+<h1> <%= "#{t('editing')} #{t('folder.folder')}" %> Editing Document</h1>
 
 <%= render 'move_form', document: @document %>
 
-<%= link_to 'Show', @document %> |
-<%= link_to 'Back', documents_path %>
+<%= link_to t('show'), @document %> |
+<%= link_to t('back'), documents_path %>

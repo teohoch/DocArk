@@ -1,6 +1,6 @@
-<h1>Editing Folder</h1>
+<h1> <%= "#{t('editing')} #{t('document.document')}" %> </h1>
 
 <%= render 'form', folder: @folder %>
 <br>
-<%= link_to 'Show', @folder %> |
-<%= link_to 'Back', folders_path %>
+<%= link_to t('show'), @folder %> |
+<%= link_to t('back'), folders_path %>

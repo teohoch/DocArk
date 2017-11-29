@@ -5,23 +5,23 @@
         <h4 class="card-title"><%= current_folder.name %></h4>
         <p class="card-text">
           <% if current_folder.persisted? %>
-              <b>Created: </b><%= current_folder.created_at%>
+              <b> <%= t('created') %> </b><%= current_folder.created_at%>
               <br>
-              <b>Updated: </b><%= current_folder.updated_at%>
+              <b> <%= t('updated') %> </b><%= current_folder.updated_at%>
           <% end %>
         </p>
       </div>
 
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
-          <%= link_to "Create Folder here", new_folder_path(:parent_folder_id => current_folder.persisted? ? current_folder.id : -1), html_options={class: 'btn btn-primary '} %>
+          <%= link_to  "#{t('create')} #{t('folder.folder')} #{t('here')}", new_folder_path(:parent_folder_id => current_folder.persisted? ? current_folder.id : -1), html_options={class: 'btn btn-primary '} %>
         </li>
         <li class="list-group-item">
-          <%= link_to "Upload File here", new_document_path(:parent_folder_id => current_folder.persisted? ? current_folder.id : -1), html_options={class: 'btn btn-primary '} %>
+          <%= link_to "#{t('upload')} #{t('file')} #{t('here')}", new_document_path(:parent_folder_id => current_folder.persisted? ? current_folder.id : -1), html_options={class: 'btn btn-primary '} %>
 
       <% if current_folder.persisted? %>
           <li class="list-group-item">
-            <%= link_to "Edit Folder", edit_folder_path(current_folder), html_options={class: 'btn btn-primary '} %>
+            <%= link_to "#{t('editing')} #{t('folder.folder')}", edit_folder_path(current_folder), html_options={class: 'btn btn-primary '} %>
           </li>
       <% end %>
       </ul>
@@ -49,9 +49,9 @@
             <%= link_to folder[:name], folder[:url]%>
           </h4>
           <p class="card-text">
-            <b>Created: </b><%= folder[:created_at]%>
+            <b> <%= t('created') %> </b><%= folder[:created_at]%>
             <br>
-            <b>Updated: </b><%= folder[:updated_at]%>
+            <b> <%= t('updated') %>  </b><%= folder[:updated_at]%>
           </p>
         </div>
       </div>

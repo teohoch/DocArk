@@ -1,5 +1,5 @@
 
-<h2>Directorio: <%= @folder.full_path %></h2>
+<h2><%= t('path') %>  <%= @folder.full_path %></h2>
 <br>
 
 <%= render 'contents', :contents=>@contents, :current_folder=>@folder %>
@@ -19,7 +19,7 @@
   </tr>
 </table>
 <br>
-<%= link_to 'Edit', edit_folder_path(@folder) %> |
-<%= link_to 'Back', folders_path %>
+<%= link_to t('editing'), edit_folder_path(@folder) %> |
+<%= link_to t('back'), folders_path %>
 
 
