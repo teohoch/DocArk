@@ -2,7 +2,7 @@ class Document < ApplicationRecord
   belongs_to :parent_folder, class_name: 'Folder', optional: true
   belongs_to :created_by, class_name: 'User'
   belongs_to :updated_by, class_name: 'User'
-  has_many :versions
+  has_many :versions, dependent: :destroy
 
   validates_uniqueness_of :name, :scope => [:parent_folder_id, :created_by_id]
   validates :created_by, presence: true

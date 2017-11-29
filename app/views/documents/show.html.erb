@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Name:</strong>
   <%= @document.name %>
@@ -16,6 +14,15 @@
 </p>
 <p>
   <%= link_to 'Download', @document.access_url %>
+</p>
+<p>
+  <%= link_to "Upload New Version", upgrade_document_path(@document) , html_options={class: 'btn btn-primary '} %>
+</p>
+<p>
+  <%= link_to "Move to new Folder", edit_document_path(@document) , html_options={class: 'btn btn-primary '} %>
+</p>
+<p>
+  <%= link_to 'Destroy', @document, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ' %>
 </p>
 
 <%= link_to 'Edit', edit_document_path(@document) %> |

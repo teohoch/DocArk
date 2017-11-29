@@ -39,6 +39,7 @@ class Ability
     can :read, Document, :created_by_id => user.id
     can :create, Document
     can :update, Document, :created_by_id => user.id
+    can :upgrade, Document, :created_by_id => user.id
     can :destroy, Document, :created_by_id => user.id
   end
 end

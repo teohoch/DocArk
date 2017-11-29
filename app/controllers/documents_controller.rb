@@ -23,13 +23,14 @@ class DocumentsController < ApplicationController
   def edit
   end
 
+  # GET /documents/1/upgrade
+  def upgrade
+  end
+
   # POST /documents
   # POST /documents.json
   def create
-    @document = Document.new(name: document_params[:name],
-                             parent_folder_id: folder_create_params,
-                             created_by: current_user,
-                             updated_by: current_user)
+
 
     if not document_create.has_key? :upfile
       @document.errors.add(:upfile, 'No file Uploaded!')
@@ -41,12 +42,10 @@ class DocumentsController < ApplicationController
       render :new
     else
       name = (document_create[:name].blank? ? document_create[:upfile].original_filename : document_create[:name])
-      @document = Document.new(
-          name: name,
-          parent_folder_id: document_create[:parent_folder],
-          created_by_id: current_user.id,
-          updated_by_id: current_user.id
-      )
+      @document = Document.new(name: name,
+                               parent_folder_id: folder_create_params,
+                               created_by: current_user,
+                               updated_by: current_user)
       if @document.save
         @version = Version.new(
             document: @document,
@@ -79,15 +78,16 @@ class DocumentsController < ApplicationController
   # PATCH/PUT /documents/1
   # PATCH/PUT /documents/1.json
   def update
-    if request.method_symbol == :put
+    if request.request_method_symbol == :put
       update_put
-    elsif request.method_symbol == :patch
+    elsif request.request_method_symbol == :patch
       update_patch
     else
       render partial: 'api/v1/error', locals: {:@error => {code: 501, message: 'Not Implemented'}}, status: 501
     end
 
 
+=begin
     respond_to do |format|
       if @document.update(document_params)
         format.html { redirect_to @document, notice: 'Document was successfully updated.' }
@@ -97,6 +97,7 @@ class DocumentsController < ApplicationController
         format.json { render json: @document.errors, status: :unprocessable_entity }
       end
     end
+=end
   end
 
   def update_put
@@ -114,12 +115,13 @@ class DocumentsController < ApplicationController
       old_version.save
       redirect_to @document, notice: 'New Version of Document Uploaded.'
     else
-      render :edit
+      @document.errors.add(:upfile, @new_version.errors[:upfile][0])
+      render :upgrade
     end
   end
 
   def update_patch
-    if @document.update(:parent_folder => document_patch[:parent_folder])
+    if @document.update(:parent_folder_id => document_patch[:parent_folder_id])
       redirect_to @document, notice: 'Document Updated.'
     else
       error_renderer(error_creator(@document.errors))
@@ -145,7 +147,7 @@ class DocumentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def document_params
-      params.require(:document).permit(:name, :size, :version)
+      params.require(:document).permit(:name, :parent_folder_id)
     end
 
     def folder_new_params
@@ -165,11 +167,15 @@ class DocumentsController < ApplicationController
     end
 
     def document_create
-      temp = params.require(:document).permit(:name, :id_parent_folder, :upfile)
+      temp = params.require(:document).permit(:name, :parent_folder_id, :upfile)
       temp[:parent_folder] = nil
       if temp.has_key?(:parent_folder_id) and Folder.exists?(id: temp[:parent_folder_id])
         temp[:parent_folder] = Folder.find(temp[:parent_folder_id])
       end
       temp
     end
+
+  def document_patch
+    params.permit(:parent_folder_id)
+  end
 end

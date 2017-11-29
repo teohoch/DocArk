@@ -134,6 +134,9 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
+    file_validators (2.1.0)
+      activemodel (>= 3.0)
+      mime-types (>= 1.0)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
     fog (1.42.0)
@@ -506,6 +509,7 @@ DEPENDENCIES
   draper
   factory_bot_rails
   faker
+  file_validators
   fog
   jbuilder (~> 2.5)
   jquery-rails

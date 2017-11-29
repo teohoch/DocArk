@@ -1,0 +1,15 @@
+<%= simple_form_for @document,html: {:multipart => true }, :method => :patch do |f| %>
+
+  <div class="form-inputs">
+
+    <%= f.association :parent_folder,
+                      :include_blank => '/',
+                      collection: Folder.is_owner(current_user.id),
+                      :label_method => lambda { |parent| "#{parent.decorate.full_path}" } %>
+
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
