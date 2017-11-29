@@ -1,6 +1,6 @@
-<h1> <%= "#{t('editingi')} #{t('document.document')}" %> </h1>
+<h1> <%= "#{t('editing')} #{t('document.document')}" %> </h1>
 
 <%= render 'upgrade_form', document: @document %>
 
-<%= link_to 'Show', @document %> |
-<%= link_to 'Back', documents_path %>
+<%= link_to t('show'), @document %> |
+<%= link_to t('back'), documents_path %>

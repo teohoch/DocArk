@@ -14,14 +14,14 @@
 
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
-          <%= link_to "Create Folder here", new_folder_path(:parent_folder_id => current_folder.persisted? ? current_folder.id : -1), html_options={class: 'btn btn-primary '} %>
+          <%= link_to  "#{t('create')} #{t('folder.folder')} #{t('here')}", new_folder_path(:parent_folder_id => current_folder.persisted? ? current_folder.id : -1), html_options={class: 'btn btn-primary '} %>
         </li>
         <li class="list-group-item">
-          <%= link_to "Upload File here", new_document_path(:parent_folder_id => current_folder.persisted? ? current_folder.id : -1), html_options={class: 'btn btn-primary '} %>
+          <%= link_to "#{t('upload')} #{t('file')} #{t('here')}", new_document_path(:parent_folder_id => current_folder.persisted? ? current_folder.id : -1), html_options={class: 'btn btn-primary '} %>
 
       <% if current_folder.persisted? %>
           <li class="list-group-item">
-            <%= link_to "Edit Folder", edit_folder_path(current_folder), html_options={class: 'btn btn-primary '} %>
+            <%= link_to "#{t('editing')} #{t('folder.folder')}", edit_folder_path(current_folder), html_options={class: 'btn btn-primary '} %>
           </li>
       <% end %>
       </ul>

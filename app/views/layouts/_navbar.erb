@@ -16,11 +16,11 @@
           </a>
         </li>
         <span class="navbar-text" style="padding-right: 5px">
-          <%= link_to 'New Folder',new_folder_path %>
+          <%= link_to "#{t('new')} #{t('folder.folder')}",new_folder_path %>
         </span>
         <% if user_signed_in? %>
           <span class="navbar-text" style="padding-right: 5px">
-            <%= link_to 'My Folders',folders_path %>
+            <%= link_to "#{t('my')} #{t('folder.folders')}",folders_path %>
           </span>
         <% end%>
       </ul>
@@ -31,7 +31,7 @@
             <%= image_tag current_user.image, html_options = {style: 'max-height:40px; border-radius: 25px;'} %>
           </span>
       <% else %>
-          <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, html_options={class: 'btn btn-primary '} %>
+          <%= link_to t('sign_in_with_google'), user_google_oauth2_omniauth_authorize_path, html_options={class: 'btn btn-primary '} %>
       <% end %>
 
 

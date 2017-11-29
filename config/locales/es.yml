@@ -5,8 +5,13 @@ es:
   logout: "Cerrar sesion"
 
   created: "Creado"
+  create: "Crear"
+  here: "Aquí"
+  upload: "Subir"
+  file: "Archivo"
   updated: "Actualizado"
   editing: "Editar"
+
   path: "Directorio"
 
   name: "Nombre"
@@ -23,6 +28,16 @@ es:
   document:
     document: "Documento"
     documents: "Documentos"
+
+  back: "Volver"
+  show: "Mostrar"
+  my: "Mis"
+  download: "Descargar"
+  destroy: "Borrar"
+  move: "Mover"
+  to: "a una"
+
+  sign_in_with_google: "Iniciar sesión con su cuenta de Google"
 
 
 

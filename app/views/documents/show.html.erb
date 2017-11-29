@@ -13,17 +13,17 @@
   <%= @document.version %>
 </p>
 <p>
-  <%= link_to 'Download', @document.access_url %>
+  <%= link_to t('download'), @document.access_url %>
 </p>
 <p>
-  <%= link_to "Upload New Version", upgrade_document_path(@document) , html_options={class: 'btn btn-primary '} %>
+  <%= link_to "#{t('upload')} #{t('new')} #{t('version')}", upgrade_document_path(@document) , html_options={class: 'btn btn-primary '} %>
 </p>
 <p>
-  <%= link_to "Move to new Folder", edit_document_path(@document) , html_options={class: 'btn btn-primary '} %>
+  <%= link_to "#{t('move')} #{t('to')} #{t('new')} #{t('folder.folder')}", edit_document_path(@document) , html_options={class: 'btn btn-primary '} %>
 </p>
 <p>
-  <%= link_to 'Destroy', @document, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ' %>
+  <%= link_to t('destroy'), @document, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ' %>
 </p>
 
-<%= link_to 'Edit', edit_document_path(@document) %> |
-<%= link_to 'Back', documents_path %>
+<%= link_to t('editing'), edit_document_path(@document) %> |
+<%= link_to t('back'), documents_path %>
