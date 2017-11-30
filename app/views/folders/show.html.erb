@@ -2,24 +2,11 @@
 <h2><%= t('path') %>  <%= @folder.full_path %></h2>
 <br>
 
+
 <%= render 'contents', :contents=>@contents, :current_folder=>@folder %>
 
-<table>
-  <tr>
-    <th><%= @folder.name %></th>
-  </tr>
-  <tr>
-    <th><%= @folder.updated_at %></th>
-  </tr>
-  <tr>
-    <th><%= @folder.created_at %></th>
-  </tr>
-  <tr>
-    <th><%= @user.email %></th>
-  </tr>
-</table>
-<br>
-<%= link_to t('editing'), edit_folder_path(@folder) %> |
-<%= link_to t('back'), folders_path %>
+
+
+
 
 

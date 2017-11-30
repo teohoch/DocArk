@@ -18,8 +18,6 @@ ActiveRecord::Schema.define(version: 20171123073209) do
 
   create_table "documents", force: :cascade do |t|
     t.string "name"
-    t.integer "size"
-    t.uuid "aws_identifier", default: -> { "uuid_generate_v4()" }
     t.bigint "parent_folder_id"
     t.bigint "created_by_id"
     t.bigint "updated_by_id"
@@ -104,9 +102,12 @@ ActiveRecord::Schema.define(version: 20171123073209) do
 
   create_table "versions", force: :cascade do |t|
     t.integer "version"
+    t.integer "size"
     t.bigint "document_id"
     t.bigint "user_id"
     t.boolean "current"
+    t.string "upfile"
+    t.datetime "expiration_date"
     t.datetime "created_at", null: false
     t.index ["document_id"], name: "index_versions_on_document_id"
     t.index ["user_id"], name: "index_versions_on_user_id"

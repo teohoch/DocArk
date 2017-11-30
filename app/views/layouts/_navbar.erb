@@ -25,10 +25,12 @@
         <% end%>
       </ul>
       <% if user_signed_in? %>
-          <span class="navbar-text">
+          <span class="navbar-text" style="padding-right: 12px">
             <%= "#{t('sign_as')} #{current_user.name}" %>
-            <%= link_to(t('logout'), destroy_user_session_path, method: :delete) %>
+          </span>
+          <span class="navbar-text">
             <%= image_tag current_user.image, html_options = {style: 'max-height:40px; border-radius: 25px;'} %>
+            <%= link_to(t('logout'), destroy_user_session_path, method: :delete) %>
           </span>
       <% else %>
           <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, html_options={class: 'btn btn-primary '} %>
