@@ -25,10 +25,6 @@ es:
     folder: "Carpeta"
     folders: "Carpetas"
 
-  document:
-    document: "Documento"
-    documents: "Documentos"
-
   back: "Volver"
   show: "Mostrar"
   my: "Mis"
@@ -41,3 +37,62 @@ es:
 
 
 
+
+
+  new: 'Nuevo'
+
+
+
+
+  create: "Crear"
+  edit: "Editar"
+  destroy: "Destruir"
+  show: "Mostrar"
+  new_m: "Nuevo"
+  new_f: "Nueva"
+  back: "Atras"
+  succesfully_created: "creado con exito."
+  succesfully_updated: "actualizada con exito."
+  succesfully_destroyed: "eliminado con exito."
+  succesfully_uploaded: "cargada con exito."
+
+  document:
+    name: "Nombre"
+    documents: 'Archivos'
+    document: 'Archivo'
+    size: "Tamaño"
+    version: "Version"
+    error:
+      upfile:
+        missing: 'No se subio un archivo!'
+        size: 'El archivo subido es muy grande, el tamaño maximo es 5 MB.'
+      base: 'Error guardando el archivo, pruebe nuevamente.'
+
+  activerecord:
+        models:
+          document:
+            one: "Archivo"
+            other: "Archivos"
+          folder:
+            one: "Carpeta"
+            other: "Carpetas"
+        attributes:
+          folder:
+            name: 'Nombre'
+            created_at: "Creado"
+            updated_at: "Actualizado"
+            parent_folder: "Carpeta padre"
+          document:
+            name: 'Nombre'
+            created_at: "Creado"
+            updated_at: "Actualizado"
+            parent_folder: "Carpeta padre"
+            size: 'Tamaño'
+
+  helpers:
+      submit:
+        document:
+          create: "Crear Archivo"
+
+        folder:
+          create: "Crear Carpeta"

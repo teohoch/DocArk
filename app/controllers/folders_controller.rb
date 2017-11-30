@@ -35,7 +35,7 @@ class FoldersController < ApplicationController
 
     respond_to do |format|
       if @folder.save
-        format.html { redirect_to @folder, notice: 'Folder was successfully created.' }
+        format.html { redirect_to @folder, notice: "#{Folder.model_name.human} #{t('succesfully_created')}" }
         format.json { render :show, status: :created, location: @folder }
       else
         format.html { render :new }
@@ -49,7 +49,7 @@ class FoldersController < ApplicationController
   def update
     respond_to do |format|
       if @folder.update(folder_params)
-        format.html { redirect_to @folder, notice: 'Folder was successfully updated.' }
+        format.html { redirect_to @folder, notice: "#{Folder.model_name.human} #{t('succesfully_updated')}" }
         format.json { render :show, status: :ok, location: @folder }
       else
         format.html { render :edit }
@@ -63,7 +63,7 @@ class FoldersController < ApplicationController
   def destroy
     @folder.destroy
     respond_to do |format|
-      format.html { redirect_to folders_url, notice: 'Folder was successfully destroyed.' }
+      format.html { redirect_to folders_url, notice: "#{Folder.model_name.human} #{t('succesfully_destroyed')}" }
       format.json { head :no_content }
     end
   end

@@ -33,11 +33,11 @@ class DocumentsController < ApplicationController
 
 
     if not document_create.has_key? :upfile
-      @document.errors.add(:upfile, 'No file Uploaded!')
+      @document.errors.add(:upfile, t('document.error.upfile.missing'))
       @fixed = true
       render :new
     elsif (document_create[:upfile].size) > 5*(2.0**20)
-      @document.errors.add(:upfile, 'Uploaded File is too large, maximum size is 5 MB')
+      @document.errors.add(:upfile, t('document.error.upfile.size'))
       @fixed = true
       render :new
     else
@@ -56,14 +56,14 @@ class DocumentsController < ApplicationController
             user: @document.created_by
         )
         if @version.save
-          redirect_to @document, notice: 'Document was successfully created.'
+          redirect_to @document, notice: "#{Document.model_name.human} #{t('succesfully_created')}"
         else
           @document.destroy
           @document = Document.new(name: document_params[:name],
                                    parent_folder_id: folder_create_params,
                                    created_by: current_user,
                                    updated_by: current_user)
-          @document.errors[:base] << 'Error saving the current file, try again.'
+          @document.errors[:base] << t('document.error.base')
           @fixed = true
           render :new
         end
@@ -113,7 +113,7 @@ class DocumentsController < ApplicationController
     if @new_version.save
       old_version.current = false
       old_version.save
-      redirect_to @document, notice: 'New Version of Document Uploaded.'
+      redirect_to @document, notice: "#{t('new_f')} #{Version.model_name.human} #{t('succesfully_uploaded')}"
     else
       @document.errors.add(:upfile, @new_version.errors[:upfile][0])
       render :upgrade
@@ -122,7 +122,7 @@ class DocumentsController < ApplicationController
 
   def update_patch
     if @document.update(:parent_folder_id => document_patch[:parent_folder_id])
-      redirect_to @document, notice: 'Document Updated.'
+      redirect_to @document, notice: "#{Document.model_name.human} #{t('succesfully_updated')}"
     else
       error_renderer(error_creator(@document.errors))
     end
@@ -134,7 +134,7 @@ class DocumentsController < ApplicationController
   def destroy
     @document.destroy
     respond_to do |format|
-      format.html { redirect_to documents_url, notice: 'Document was successfully destroyed.' }
+      format.html { redirect_to documents_url, notice: "#{Document.model_name.human} #{t('succesfully_destroyed')}" }
       format.json { head :no_content }
     end
   end
@@ -143,6 +143,9 @@ class DocumentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_document
       @document = Document.find(params[:id])
+      if params.has_key? :version and @document.available_versions.include?(params[:version].to_i)
+        @document.version = params[:version].to_i
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

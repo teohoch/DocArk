@@ -1,15 +1,26 @@
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <%= "#{Version.model_name.human} #{@document.version}" %>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <% @document.available_versions.each do |version| %>
+      <a class="dropdown-item" href="<%= document_path(@document, :version=>version) %>"><%= "#{Version.model_name.human} #{version}" %></a>
+    <% end %>
+  </div>
+</div>
+<br>
 <p>
-  <strong> <%= t('name') %> </strong>
+  <strong><%= Document.human_attribute_name('name') %>:</strong>
   <%= @document.name %>
 </p>
 
 <p>
-  <strong> <%= t('size') %> </strong>
+  <strong><%= Document.human_attribute_name('size') %>:</strong>
   <%= number_to_human_size @document.size %>
 </p>
 
 <p>
-  <strong> <%= t('version') %> </strong>
+  <strong>Version:</strong>
   <%= @document.version %>
 </p>
 <p>
