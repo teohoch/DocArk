@@ -25,23 +25,15 @@ es:
     folder: "Carpeta"
     folders: "Carpetas"
 
-  back: "Volver"
-  show: "Mostrar"
+
   my: "Mis"
   download: "Descargar"
   destroy: "Borrar"
   move: "Mover"
   to: "a una"
+  home: "Página princial"
 
   sign_in_with_google: "Iniciar sesión con su cuenta de Google"
-
-
-
-
-
-  new: 'Nuevo'
-
-
 
 
   create: "Crear"
@@ -50,22 +42,22 @@ es:
   show: "Mostrar"
   new_m: "Nuevo"
   new_f: "Nueva"
-  back: "Atras"
-  succesfully_created: "creado con exito."
-  succesfully_updated: "actualizada con exito."
-  succesfully_destroyed: "eliminado con exito."
-  succesfully_uploaded: "cargada con exito."
+  back: "Volver"
+  succesfully_created: "creado con éxito."
+  succesfully_updated: "actualizada con éxito."
+  succesfully_destroyed: "eliminado con éxito."
+  succesfully_uploaded: "cargada con 'éxito."
 
   document:
     name: "Nombre"
     documents: 'Archivos'
     document: 'Archivo'
     size: "Tamaño"
-    version: "Version"
+    version: "Versión"
     error:
       upfile:
-        missing: 'No se subio un archivo!'
-        size: 'El archivo subido es muy grande, el tamaño maximo es 5 MB.'
+        missing: 'No se subió un archivo!'
+        size: 'El archivo subido es muy grande, el tamaño máximo es 5 MB.'
       base: 'Error guardando el archivo, pruebe nuevamente.'
 
   activerecord:

@@ -10,17 +10,17 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
           <span class="navbar-text" style="padding-right: 12px">
-          <%= link_to 'Home',root_path %>
+          <%= link_to t('home'),root_path %>
         </span>
         </li>
         <% if user_signed_in? %>
           <span class="navbar-text" style="padding-right: 12px">
-            <%= link_to 'New Folder',new_folder_path %>
+            <%= link_to "#{t('new')} #{t('folder.folder')}",new_folder_path %>
           </span>
         <% end%>
         <% if user_signed_in? %>
           <span class="navbar-text" style="padding-right: 12px">
-            <%= link_to 'My Folders',folders_path %>
+            <%= link_to "#{t('my')} #{t('folder.folders')}",folders_path %>
           </span>
         <% end%>
       </ul>
@@ -33,7 +33,7 @@
             <%= link_to(t('logout'), destroy_user_session_path, method: :delete) %>
           </span>
       <% else %>
-          <%= link_to "Sign in with Google", user_google_oauth2_omniauth_authorize_path, html_options={class: 'btn btn-primary '} %>
+          <%= link_to t('sign_in_with_google'), user_google_oauth2_omniauth_authorize_path, html_options={class: 'btn btn-primary '} %>
       <% end %>
 
 
