@@ -26,15 +26,11 @@
 <p>
   <%= link_to t('download'), @document.access_url %>
 </p>
-<p>
+<div>
   <%= link_to "#{t('upload')} #{t('new')} #{t('version')}", upgrade_document_path(@document) , html_options={class: 'btn btn-primary '} %>
-</p>
-<p>
   <%= link_to "#{t('move')} #{t('to')} #{t('new')} #{t('folder.folder')}", edit_document_path(@document) , html_options={class: 'btn btn-primary '} %>
-</p>
-<p>
   <%= link_to t('destroy'), @document, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ' %>
-</p>
-
+</div>
+<br>
 <%= link_to t('editing'), edit_document_path(@document) %> |
 <%= link_to t('back'), documents_path %>
