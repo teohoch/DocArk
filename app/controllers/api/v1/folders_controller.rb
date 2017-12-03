@@ -79,7 +79,7 @@ module Api
       def set_folder
         if Folder.exists?(params[:id])
           @folder = Folder.find(params[:id])
-          unless current_user.id == @folder.created_by
+          unless current_user.id == @folder.created_by_id
             error_renderer({code: 401, message: 'Unauthorized'})
           end
         else

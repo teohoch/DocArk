@@ -22,7 +22,7 @@ module Api
         if document_params.has_key? :name
           query_documents = query_documents.name_ilike(document_params[:name].split(','))
         end
-        if document_params.has_key? :parent_document_id
+        if document_params.has_key? :parent_folder_id
           parent_ids = document_params[:parent_folder_id].split(',').map{|x| x=='-1' ? nil : x}
           query_documents = query_documents.child_of(parent_ids)
         end
@@ -133,8 +133,11 @@ module Api
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def document_params
-        temp = params.permit(:name, :id_parent_folder,:limit,:offset,:format)
-        temp[:parent_folder_id] = temp.has_key? :id_parent_folder ? temp.delete(:id_parent_folder) : nil
+        temp = params.permit(:name, :id_parent_folder,:limit,:offset,:format).to_hash.symbolize_keys
+        if temp.has_key? :id_parent_folder
+          temp[:parent_folder_id] =  temp[:id_parent_folder]
+          temp.delete(:id_parent_folder)
+        end
         temp
       end
 
@@ -143,6 +146,7 @@ module Api
         temp[:parent_folder] = nil
         if temp.has_key?(:id_parent_folder) and Folder.exists?(id: temp[:id_parent_folder])
           temp[:parent_folder] = Folder.find(temp[:id_parent_folder])
+          temp[:parent_folder_id] = temp.delete(:id_parent_folder)
         end
         temp
       end
