@@ -91,7 +91,8 @@ module Api
       def folder_params
         temp = params.permit(:name, :id_parent_folder,:limit,:offset,:format)
         if temp.has_key? :id_parent_folder
-          temp[:parent_folder_id] = temp.delete(:id_parent_folder)
+          temp[:parent_folder_id] =  temp[:id_parent_folder]
+          temp.delete(:id_parent_folder)
         end
         temp
       end
