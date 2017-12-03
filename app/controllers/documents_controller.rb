@@ -5,7 +5,7 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.json
   def index
-    @documents = Document.all
+    @documents = Document.is_owner(current_user.id)
   end
 
   # GET /documents/1

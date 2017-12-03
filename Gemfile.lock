@@ -114,6 +114,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     doorkeeper (4.2.6)
       railties (>= 4.2)
+    doorkeeper-i18n (4.0.0)
     draper (3.0.1)
       actionpack (~> 5.0)
       activemodel (~> 5.0)
@@ -505,6 +506,7 @@ DEPENDENCIES
   database_cleaner
   devise
   doorkeeper
+  doorkeeper-i18n
   draper
   factory_bot_rails
   faker

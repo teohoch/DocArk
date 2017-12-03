@@ -51,6 +51,7 @@ gem 'carrierwave'
 gem 'fog'
 
 gem 'doorkeeper'
+gem 'doorkeeper-i18n'
 
 gem 'cancancan'
 
