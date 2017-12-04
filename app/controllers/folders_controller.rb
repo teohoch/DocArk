@@ -8,6 +8,7 @@ class FoldersController < ApplicationController
     folders = FolderDecorator.decorate_collection(Folder.is_owner(current_user.id).in_root)
     files = DocumentDecorator.decorate_collection(Document.is_owner(current_user.id).in_root)
     @contents = folders.map(&:to_simple_object) + files.map(&:to_simple_object)
+
     @current_folder = Folder.new(name: 'Root')
   end
 
