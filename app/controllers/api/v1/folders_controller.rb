@@ -105,7 +105,7 @@ module Api
 
       def force_delete_param
         temp = params.permit(:force)
-        (temp.has_key? :force and temp[:force] == 1)
+        (temp.has_key? :force and temp[:force] == '1')
       end
 
     end

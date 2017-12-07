@@ -23,7 +23,7 @@ class Api::V1::APIController < ActionController::Base
       when :parent_folder_ownership
         {code: 401, message: 'You don\'t have access to the parent folder.'}
       when :contents
-        {code: 403, message: 'The Folder you\'re trying to delete has contents!.'}
+        {code: 403, message: 'The Folder you\'re trying to delete has contents!'}
       else
         {code: 500, message: 'Unknown Error'}
     end
