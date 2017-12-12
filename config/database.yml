@@ -91,4 +91,4 @@ production:
   host: "/cloudsql/docark-project:southamerica-east1:docark-database"
   database: docark
   username: docArk
-  password: <%= ENV['DOCARK_DATABASE_PASSWORD'] %>
+  password: <%= Rails.application.secrets.db_password %>
