@@ -88,7 +88,7 @@ production:
   encoding: unicode
   pool: 5
   timeout: 5000
-  host: "/cloudsql/docark-project:southamerica-east1:docark-database"
+  host: localhost
   database: docark
-  username: docArk
+  username: proxyuser
   password: <%= Rails.application.secrets.db_password %>
