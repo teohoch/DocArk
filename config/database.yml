@@ -90,5 +90,5 @@ production:
   timeout: 5000
   host: localhost
   database: docark
-  username: <%= ENV['POSTGRES_DB_USER] %>
-  password: <%= ENV['POSTGRES_DB_PASSWORD] %>
+  username: <%= ENV['POSTGRES_DB_USER'] %>
+  password: <%= ENV['POSTGRES_DB_PASSWORD'] %>
