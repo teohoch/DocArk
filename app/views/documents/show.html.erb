@@ -1,0 +1,36 @@
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <%= "#{Version.model_name.human} #{@document.version}" %>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <% @document.available_versions.each do |version| %>
+      <a class="dropdown-item" href="<%= document_path(@document, :version=>version) %>"><%= "#{Version.model_name.human} #{version}" %></a>
+    <% end %>
+  </div>
+</div>
+<br>
+<p>
+  <strong><%= Document.human_attribute_name('name') %>:</strong>
+  <%= @document.name %>
+</p>
+
+<p>
+  <strong><%= Document.human_attribute_name('size') %>:</strong>
+  <%= number_to_human_size @document.size %>
+</p>
+
+<p>
+  <strong>Version:</strong>
+  <%= @document.version %>
+</p>
+<p>
+  <%= link_to t('download'), @document.access_url %>
+</p>
+<div>
+  <%= link_to "#{t('upload')} #{t('new')} #{t('version')}", upgrade_document_path(@document) , html_options={class: 'btn btn-primary '} %>
+  <%= link_to "#{t('move')} #{t('to')} #{t('new')} #{t('folder.folder')}", edit_document_path(@document) , html_options={class: 'btn btn-primary '} %>
+  <%= link_to t('destroy'), @document, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger ' %>
+</div>
+<br>
+<%= link_to t('editing'), edit_document_path(@document) %> |
+<%= link_to t('back'), documents_path %>

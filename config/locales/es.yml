@@ -1,0 +1,90 @@
+es:
+  hello: "Hola Mundo"
+  home: 'Inicio'
+  sign_as: "Logeado como"
+  logout: "Cerrar sesion"
+
+  created: "Creado"
+  create: "Crear"
+  here: "Aquí"
+  upload: "Subir"
+  file: "Archivo"
+  updated: "Actualizado"
+  editing: "Editar"
+
+  path: "Directorio"
+
+  name: "Nombre"
+  size: "Tamaño"
+  version: "Versión"
+
+  new: "Nueva"
+  newo: "Nuevo"
+
+  folder:
+    folder: "Carpeta"
+    folders: "Carpetas"
+
+
+  my: "Mis"
+  download: "Descargar"
+  destroy: "Borrar"
+  move: "Mover"
+  to: "a una"
+  home: "Página princial"
+
+  sign_in_with_google: "Iniciar sesión con su cuenta de Google"
+
+
+  create: "Crear"
+  edit: "Editar"
+  destroy: "Destruir"
+  show: "Mostrar"
+  new_m: "Nuevo"
+  new_f: "Nueva"
+  back: "Volver"
+  succesfully_created: "creado con éxito."
+  succesfully_updated: "actualizada con éxito."
+  succesfully_destroyed: "eliminado con éxito."
+  succesfully_uploaded: "cargada con 'éxito."
+
+  document:
+    name: "Nombre"
+    documents: 'Archivos'
+    document: 'Archivo'
+    size: "Tamaño"
+    version: "Versión"
+    error:
+      upfile:
+        missing: 'No se subió un archivo!'
+        size: 'El archivo subido es muy grande, el tamaño máximo es 5 MB.'
+      base: 'Error guardando el archivo, pruebe nuevamente.'
+
+  activerecord:
+        models:
+          document:
+            one: "Archivo"
+            other: "Archivos"
+          folder:
+            one: "Carpeta"
+            other: "Carpetas"
+        attributes:
+          folder:
+            name: 'Nombre'
+            created_at: "Creado"
+            updated_at: "Actualizado"
+            parent_folder: "Carpeta padre"
+          document:
+            name: 'Nombre'
+            created_at: "Creado"
+            updated_at: "Actualizado"
+            parent_folder: "Carpeta padre"
+            size: 'Tamaño'
+
+  helpers:
+      submit:
+        document:
+          create: "Crear Archivo"
+
+        folder:
+          create: "Crear Carpeta"

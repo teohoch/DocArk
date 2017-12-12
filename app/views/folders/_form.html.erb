@@ -1,0 +1,28 @@
+<%= simple_form_for(@folder) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <% if @fixed %>
+        <% if @folder.parent_folder.nil? %>
+            <%= f.association :parent_folder, collection: [] ,
+                              :include_blank => '/',
+                              :label_method => lambda { |parent| "#{parent.decorate.full_path}" } %>
+        <% else %>
+            <%= f.association :parent_folder,
+                              collection: Folder.where(id: @folder.parent_folder_id),
+                              :include_blank => false,
+                              :label_method => lambda { |parent| "#{parent.decorate.full_path}" } %>
+        <% end %>
+    <% else %>
+        <%= f.association :parent_folder,
+                          :include_blank => '/',
+                          collection: Folder.is_owner(current_user.id).where.not(id: @folder.id),
+                          :label_method => lambda { |parent| "#{parent.decorate.full_path}" } %>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
