@@ -36,7 +36,7 @@ class DocumentsController < ApplicationController
       @document.errors.add(:upfile, t('document.error.upfile.missing'))
       @fixed = true
       render :new
-    elsif (document_create[:upfile].size) > 5*(2.0**20)
+    elsif (document_create[:upfile].size) > 1024*(2.0**20)
       @document.errors.add(:upfile, t('document.error.upfile.size'))
       @fixed = true
       render :new
