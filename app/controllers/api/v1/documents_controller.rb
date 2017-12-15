@@ -42,7 +42,7 @@ module Api
       def create
         if not document_create.has_key? :upfile
           error_renderer({code:400, message: 'No file provided!'})
-        elsif (document_create[:upfile].size) > 5*(2.0**20)
+        elsif (document_create[:upfile].size) > 1024*(2.0**20)
           error_renderer({code:413, message: 'Uploaded File is too large, maximum size is 5 MB'})
         else
           name = (document_create.has_key?(:name) ? document_create[:name] : document_create[:upfile].original_filename)
